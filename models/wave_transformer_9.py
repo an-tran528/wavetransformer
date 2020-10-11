@@ -39,7 +39,7 @@ class WaveTransformer9(Module):
                  beam_size: int
                  ) \
             -> None:
-        """Baseline method for audio captioning with Clotho dataset.
+        """
         TODO: update description
         """
         super(WaveTransformer9, self).__init__()
@@ -54,7 +54,7 @@ class WaveTransformer9(Module):
             inner_kernel_size=inner_kernel_size_encoder,
             inner_padding=inner_padding_encoder,
             last_dim=last_dim_encoder,
-            dnn_mode=dnn_mode_encoder)
+            )
 
         self.sublayer_decoder: Module = TransformerBlock(
             n_features=n_features_decoder,
