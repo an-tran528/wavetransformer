@@ -1,0 +1,37 @@
+# ---------------------------------
+# Settings for the baseline method.
+#
+# author: An Tran
+# affiliation: Tampere University
+# ---------------------------------
+model: !include model_ht_12_16_3.yaml
+# ----------------------
+data:
+  input_field_name: 'features'
+  output_field_name: 'words_ind'
+  load_into_memory: No
+  batch_size: 12
+  shuffle: Yes
+  num_workers: 30
+  drop_last: Yes
+  use_multiple_mode: No
+  use_validation_split: Yes 
+# ----------------------
+training:
+  nb_epochs: 300
+  patience: 10
+  loss_thr: !!float 1e-4
+  optimizer:
+    lr: !!float 1e-3
+  grad_norm:
+    value: !!float 1.
+    norm: 2
+  force_cpu: No
+  text_output_every_nb_epochs: !!int 10
+  nb_examples_to_sample: 100
+  use_class_weights: Yes
+  use_y: Yes
+  #use_kl: Yes
+  clamp_value_freqs: -1  # -1 is for ignoring
+# EOF
+

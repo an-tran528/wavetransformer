@@ -1,0 +1,28 @@
+## =================================
+# Settings for the model.
+#
+## =================================
+# Settings for the model.
+#
+# author: An Tran
+# affiliation: Tampere University
+# =================================
+model_name: 'wave_transformer_3'
+use_pre_trained_model: No
+# -----------------------------------
+encoder:
+  in_channels_encoder:  64
+  out_channels_encoder: [16,32,64,128] 
+  kernel_size_encoder: 3 
+  dilation_rates_encoder: [2,2,2,2]
+  last_dim_encoder: 128 
+  beam_size: 0
+# -----------------------------------
+decoder:
+  num_layers_decoder: 3
+  num_heads_decoder: 4
+  n_features_decoder: 128
+  n_hidden_decoder: 128
+  nb_classes: # Empty, to be filled automatically.
+  dropout_decoder: .25
+# EOF

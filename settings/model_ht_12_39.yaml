@@ -1,0 +1,25 @@
+## =================================
+# Settings for the model.
+#
+# author: An Tran
+# affiliation: Tampere University
+# =================================
+model_name: 'wave_transformer_8'
+use_pre_trained_model: No
+# -----------------------------------
+encoder:
+  in_channels_encoder:  64
+  cnn_channels_encoder:  128
+  inner_kernel_size_encoder: 3
+  inner_padding_encoder: 1
+  last_dim_encoder: 128 
+  beam_size: 0 
+# -----------------------------------
+decoder:
+  num_layers_decoder: 3
+  num_heads_decoder: 4
+  n_features_decoder: 128
+  n_hidden_decoder: 128
+  nb_classes: # Empty, to be filled automatically.
+  dropout_decoder: .25
+# EOF
