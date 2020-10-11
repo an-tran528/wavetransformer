@@ -1,0 +1,28 @@
+# =================================
+# Dataset creation process settings.
+#
+# author: Konstantinos Drossos
+# affiliation: Tampere University
+# =================================
+workflow:
+  create_dataset: Yes
+  validate_dataset: No
+# -----------------------------------
+annotations:
+  development_file: 'clotho_captions_development.csv'
+  evaluation_file: 'clotho_captions_evaluation.csv'
+  audio_file_column: 'file_name'
+  captions_fields_prefix: 'caption_{}'
+  use_special_tokens: Yes
+  nb_captions: 5
+  keep_case: No
+  remove_punctuation_words: Yes
+  remove_punctuation_chars: Yes
+  use_unique_words_per_caption: No
+  use_unique_chars_per_caption: No
+# -----------------------------------
+audio:
+  sr: 44100
+  to_mono: Yes
+  max_abs_value: 1.
+# EOF
