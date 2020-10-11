@@ -6,9 +6,7 @@ from torch.nn import Module, Linear, GRU, ModuleList, ReLU, BatchNorm1d, Conv1d,
 from .wave_block import WaveBlock
 from typing import List
 from .depthwise_separable_conv_block import DepthWiseSeparableConvBlock
-from .depthwise_separable_conv_block_2 import DepthWiseSeparableConvBlock2
 from .dessed_dnn import DepthWiseSeparableDNN
-from .dessed_dnn_2 import DepthWiseSeparableDNN2
 import torch
 import torch.nn.functional as F
 __author__ = 'An Tran'
@@ -24,7 +22,6 @@ class DessedDNNEncoder(Module):
                  inner_kernel_size: int,
                  inner_padding: int,
                  last_dim: int,
-                 dnn_mode: str,
                  ) \
             -> None:
         """WaveNetEncoder module.
@@ -34,22 +31,12 @@ class DessedDNNEncoder(Module):
 
         self.in_channels: int = in_channels
         self.cnn_channels: int = cnn_channels
-        if dnn_mode == "max":
-            self.dnn = DepthWiseSeparableDNN(
-                cnn_channels=cnn_channels,
-                cnn_dropout=0.2,
-                inner_kernel_size=inner_kernel_size,
-                inner_padding=inner_padding
-            )
-        elif dnn_mode == 'avg':
-            self.dnn = DepthWiseSeparableDNN2(
-                cnn_channels=cnn_channels,
-                cnn_dropout=0.2,
-                inner_kernel_size=inner_kernel_size,
-                inner_padding=inner_padding
-            )
-        else:
-            raise Exception('Incorrect argument')
+        self.dnn = DepthWiseSeparableDNN(
+            cnn_channels=cnn_channels,
+            cnn_dropout=0.2,
+            inner_kernel_size=inner_kernel_size,
+            inner_padding=inner_padding
+        )
         
         self.fc_audioset = Linear(last_dim, last_dim, bias=True)
         

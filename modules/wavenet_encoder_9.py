@@ -24,7 +24,6 @@ class WaveNetEncoder9(Module):
                  inner_kernel_size: int,
                  inner_padding: int,
                  last_dim: int,
-                 dnn_mode: str,
                  ) \
             -> None:
         """WaveNetEncoder module.
