@@ -38,6 +38,7 @@ class WaveTransformer3(Module):
                  n_hidden_decoder: int,
                  nb_classes: int,
                  dropout_decoder: float,
+                 beam_size: int,
                  ) \
             -> None:
         """Baseline method for audio captioning with Clotho dataset.
@@ -46,7 +47,7 @@ class WaveTransformer3(Module):
         super(WaveTransformer3, self).__init__()
         self.max_length: int = 22
         self.nb_classes: int = nb_classes
-        self.beam_size = None
+        self.beam_size = beam_size
 
         self.encoder: Module = WaveNetEncoder3(
             in_channels=in_channels_encoder,
@@ -120,7 +121,7 @@ class WaveTransformer3(Module):
         torch.cuda.empty_cache()
         gc.collect()
         eos_token = 9
-        if self.beam_size:
+        if self.beam_size > 1:
             return beam_decode(x,
                                self.encoder,
                                self.decoder,

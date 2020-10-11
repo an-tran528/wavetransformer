@@ -28,7 +28,6 @@ class WaveTransformer8(Module):
                  inner_kernel_size_encoder: int,
                  inner_padding_encoder: int,
                  last_dim_encoder: int,
-                 dnn_mode_encoder: str,
                  num_layers_decoder: int,
                  num_heads_decoder: int,
                  n_features_decoder: int,
@@ -114,9 +113,9 @@ class WaveTransformer8(Module):
         return out
 
     def _inference(self, x):
-        torch.cuda.empty_cache()
-        gc.collect()
-        if self.beam_size > 0:
+        #torch.cuda.empty_cache()
+        #gc.collect()
+        if self.beam_size > 1:
             return beam_decode(x,
                                self.encoder,
                                self.decoder,
