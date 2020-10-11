@@ -196,34 +196,8 @@ def _do_evaluation(model: Module,
 
     metrics = evaluate_metrics(captions_pred, captions_gt)
 
-    logger_main.info("Logging scores")
-    sorted_spider = captions_pred.copy() 
     for metric, values in metrics.items():
         logger_main.info(f'{metric:<7s}: {values["score"]:7.4f}')
-        if metric == "spider":
-            assert len(captions_pred) == len(values["scores"]), "Length of captions\
-                 and scores must match"
-            for i in range(len(captions_pred)):
-                assert captions_gt[i]["file_name"] == captions_pred[i]["file_name"]
-                sorted_spider[i].update(captions_gt[i])
-                sorted_spider[i].update({"SPIDEr" : values["scores"][captions_pred[i]["file_name"]]}) 
-    
-    logger_main.info("Sorting SPIDEr and write to file")
-    sorted_spider.sort(key=itemgetter('SPIDEr'), reverse=True)
-
-    caption_dir = Path('captions')
-
-    if not caption_dir.is_dir():
-        caption_dir.mkdir()
-    caption_file = caption_dir.joinpath(settings_io["logging"]["caption_logger_file"])
-    with open(caption_file,'w') as f:
-        for i,cap in enumerate(sorted_spider):
-            f.write(f"{i})")
-            for k,v in cap.items():
-                f.write(f"{k}:{v}\n")
-            f.write('\n'*2)
-
-    logger_main.info("Finished writing captions")
 
 def _do_training(model: Module,
                  settings_training:  MutableMapping[
