@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from modules.wave_block import WaveBlock
 from modules.wavenet_encoder_3 import WaveNetEncoder3
-from modules.wavenet_encoder_9 import WaveNetEncoder9
+from modules.wavenet_encoder_10 import WaveNetEncoder10
 from modules.transformer_block import TransformerBlock
 from modules.transformer import Transformer
 from modules.decode_utils import greedy_decode
@@ -17,6 +17,6 @@ __docformat__ = 'reStructuredText'
 __all__ = ['WaveBlock', 'TransformerBlock','DepthWiseSeparableConvBlock',
             'Transformer', 'greedy_decode', 'beam_decode', 'SublayerConnection',
             'PositionalEncoding', 'WaveNetEncoder3','DepthWiseSeparableDNN', 
-            'WaveNetEncoder9','DessedDNNEncoder']
+            'WaveNetEncoder10','DessedDNNEncoder']
            
 # EOF

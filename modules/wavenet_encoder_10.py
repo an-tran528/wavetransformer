@@ -29,8 +29,27 @@ class WaveNetEncoder10(Module):
                  merge_mode: str,
                  ) \
             -> None:
-        """WaveNetEncoder module.
-        TODO: update description
+        """WaveNetEncoder10 module (1D+2D CNN).
+        :param in_channels: Input channels.
+        :type in_channels: int
+        :param out_waveblock: Output channels for the wave blocks
+        :type out_waveblock: List
+        :param kernel_size: Kernel shape/size for the wave blocks
+        :type kernel_size: List
+        :param dilation_rates: Dilation factors for the wave blocks
+        :type dilation_rates: List
+        :param inner_kernel_size: Kernel size for DWS-DNN
+        :type inner_kernel_size: int
+        :param inner_padding: Inner padding for DWS-DNN
+        :type inner_padding: int
+        :param pw_kernel: Kernel size for the merging Conv2d
+        :type pw_kernel: int
+        :param pw_padding: padding for the merging Conv2d
+        :type pw_padding: int
+        :param merge_mode: merging mode (conv/mean)
+        :type merge_mode: str
+        :param last_dim: Output channels for Linear layer.
+        :type last_dim: int
         """
         super(WaveNetEncoder10, self).__init__()
 
@@ -106,7 +125,6 @@ class WaveNetEncoder10(Module):
         for i in range(len(self.wave_blocks)):
             x1 = self.wave_blocks[i](x1)
             x1 = self.bn_relu[i](x1) 
-            #x1 = F.max_pool1d(x1,kernel_size=2)
         
         x1 = x1.unsqueeze(1).transpose(2,3)
         # CNN

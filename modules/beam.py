@@ -5,6 +5,7 @@ import torch.nn.functional as F
 from queue import PriorityQueue
 from torch.nn.utils.rnn import pad_sequence
 import time
+
 """
 https://github.com/budzianowski/PyTorch-Beam-Search-Decoding
 """

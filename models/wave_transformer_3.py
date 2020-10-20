@@ -41,8 +41,31 @@ class WaveTransformer3(Module):
                  beam_size: int,
                  ) \
             -> None:
-        """Baseline method for audio captioning with Clotho dataset.
-        TODO: update description
+        """WaveTransformer3 model.
+        :param in_channels_encoder: Input channels.
+        :type in_channels_encoder: int
+        :param out_channels_encoder: Output channels for the wave blocks
+        :type out_channels_encoder: List
+        :param kernel_size_encoder: Kernel shape/size for the wave blocks
+        :type kernel_size_encoder: List
+        :param dilation_rates_encoder: Dilation factors for the wave blocks
+        :type dilation_rates_encoder: List
+        :param last_dim_encoder: Output channels for Linear layer
+        :type last_dim_encoder: int
+        :param num_layers_decoder: Number of transformer blocks
+        :type num_layers_decoder: int
+        :param num_heads_decoder: Number of attention heads in each MHA
+        :type num_heads_decoder: int
+        :param n_features_decoder: number of features for transformer
+        :type n_features_decoder: int
+        :param n_hidden_decoder: hidden dimension of transformer 
+        :type n_hidden_decoder: int
+        :param nb_classes: vocabulary size 
+        :type nb_classes: int
+        :param dropout_decoder: dropout rate in decoder
+        :type dropout_decoder: float
+        :param beam_size: beam size (<1: greedy, >1: beam search) 
+        :type beam_size: int
         """
         super(WaveTransformer3, self).__init__()
         self.max_length: int = 22

@@ -37,8 +37,31 @@ class WaveTransformer8(Module):
                  beam_size: int
                  ) \
             -> None:
-        """
-        TODO: update description
+        """WaveTransformer8 model.
+        :param in_channels_encoder: Input channels.
+        :type in_channels_encoder: int
+        :param cnn_channels_encoder: Output channels for the DWS-DNN
+        :type cnn_channels_encoder: List
+        :param inner_kernel_size_encoder: Kernel size for DWS-DNN
+        :type inner_kernel_size_encoder: int
+        :param inner_padding_encoder: Inner padding for DWS-DNN
+        :type inner_padding_encoder: int
+        :param last_dim_encoder: Output channels for Linear layer
+        :type last_dim_encoder: int
+        :param num_layers_decoder: Number of transformer blocks
+        :type num_layers_decoder: int
+        :param num_heads_decoder: Number of attention heads in each MHA
+        :type num_heads_decoder: int
+        :param n_features_decoder: number of features for transformer
+        :type n_features_decoder: int
+        :param n_hidden_decoder: hidden dimension of transformer 
+        :type n_hidden_decoder: int
+        :param nb_classes: vocabulary size 
+        :type nb_classes: int
+        :param dropout_decoder: dropout rate in decoder
+        :type dropout_decoder: float
+        :param beam_size: beam size (<1: greedy, >1: beam search) 
+        :type beam_size: int
         """
         super(WaveTransformer8, self).__init__()
         self.max_length: int = 22

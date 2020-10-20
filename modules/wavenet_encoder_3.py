@@ -21,8 +21,17 @@ class WaveNetEncoder3(Module):
                  last_dim: int
                  ) \
             -> None:
-        """WaveNetEncoder module.
-        TODO: update description
+        """WaveNetEncoder3 module.
+        :param in_channels: Input channels.
+        :type in_channels: int
+        :param out_channels: Output channels for the wave blocks.
+        :type out_channels: List
+        :param kernel_size: Kernel shape/size for the wave blocks.
+        :type kernel_size: int
+        :param dilation_rates: Dilation factors for the wave blocks.
+        :type dilation_rates: List
+        :param last_dim: Output channels for Linear layer.
+        :type last_dim: int
         """
         super(WaveNetEncoder3, self).__init__()
 

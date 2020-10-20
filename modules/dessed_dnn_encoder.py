@@ -24,8 +24,16 @@ class DessedDNNEncoder(Module):
                  last_dim: int,
                  ) \
             -> None:
-        """WaveNetEncoder module.
-        TODO: update description
+        """DessedDNNEncoder module.
+        :param in_channels: Input channels.
+        :type in_channels: int
+        :param cnn_channels: Amount of output CNN channels.
+        :type cnn_channels: int
+        :param inner_kernel_size: Kernel shape/size of the second convolution\
+                                  for DWS-DNN.
+        :type inner_kernel_size: int
+        :param inner_padding: Inner padding.
+        :type inner_padding: int
         """
         super(DessedDNNEncoder, self).__init__()
 
