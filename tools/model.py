@@ -13,7 +13,7 @@ from torch.nn.utils import clip_grad_norm_
 from torch.utils.data import DataLoader
 from torch.optim.optimizer import Optimizer
 from torch.optim.lr_scheduler import CosineAnnealingLR 
-from models import WaveTransformer3, WaveTransformer8, WaveTransformer9, WaveTransformer10
+from models import WaveTransformer3, WaveTransformer8, WaveTransformer10
 __author__ = 'Konstantinos Drossos -- Tampere University'
 __docformat__ = 'reStructuredText'
 __all__ = ['get_device', 'get_model',
