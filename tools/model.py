@@ -13,7 +13,7 @@ from torch.nn.utils import clip_grad_norm_
 from torch.utils.data import DataLoader
 from torch.optim.optimizer import Optimizer
 from torch.optim.lr_scheduler import CosineAnnealingLR 
-from models import WaveTransformer3, WaveTransformer8, WaveTransformer9
+from models import WaveTransformer3, WaveTransformer8, WaveTransformer9, WaveTransformer10
 __author__ = 'Konstantinos Drossos -- Tampere University'
 __docformat__ = 'reStructuredText'
 __all__ = ['get_device', 'get_model',
@@ -65,8 +65,8 @@ def get_model(settings_model: MutableMapping[str, Union[str, MutableMapping]],
         model = WaveTransformer3
     elif model_name == 'wave_transformer_8':
         model = WaveTransformer8
-    elif model_name == 'wave_transformer_9':
-        model = WaveTransformer9
+    elif model_name == 'wave_transformer_10':
+        model = WaveTransformer10
     else:
         raise AttributeError(f'Unknown model type '
                              f'{settings_model["model_name"]}.')
@@ -132,22 +132,15 @@ def module_epoch_passing(data: DataLoader,
         y_hat, y, f_names_tmp = module_forward_passing(example, module, use_y)
         f_names.extend(f_names_tmp)
         y = y[:, 1:]
-        y_hat = y_hat.transpose(0,1)
-        if not use_y: # inference
-            y_hat = y_hat[:,1:]
-        try:
-            output_y_hat.extend(y_hat)
-            output_y.extend(y.cpu())
-        except AttributeError:
-            pass
-        except TypeError:
-            pass
+        y_hat = y_hat.transpose(0, 1)
+        if not use_y:  # inference
+            y_hat = y_hat[:, 1:]
 
         try:
             if use_y:
-                y_hat= y_hat[:, :y.size()[1], :]
+                y_hat = y_hat[:, :y.size()[1], :]
             loss = objective(y_hat.contiguous().view(-1, y_hat.size()[-1]),
-                        y.contiguous().view(-1))
+                             y.contiguous().view(-1))
             if has_optimizer:
                 optimizer.zero_grad()
                 if grad_norm_val > -1:
@@ -159,8 +152,14 @@ def module_epoch_passing(data: DataLoader,
                 # scheduler.step()
                 # plot_grad_flow(module.named_parameters())
 
-            objective_output[i] = loss.cpu().item()
-
+            objective_output[i] = loss.item()
+        except TypeError:
+            pass
+        try:
+            output_y_hat.extend(y_hat.detach().cpu())
+            output_y.extend(y.detach().cpu())
+        except AttributeError:
+            pass
         except TypeError:
             pass
     return objective_output, output_y_hat, output_y, f_names
