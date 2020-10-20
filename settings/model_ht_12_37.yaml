@@ -4,8 +4,8 @@
 # author: An Tran
 # affiliation: Tampere University
 # =================================
-model_name: 'wave_transformer_9'
-use_pre_trained_model: No
+model_name: 'wave_transformer_10'
+use_pre_trained_model: Yes
 # -----------------------------------
 encoder:
   in_channels_encoder:  64
@@ -15,8 +15,10 @@ encoder:
   inner_kernel_size_encoder: 3
   inner_padding_encoder: 1
   last_dim_encoder: 128 
-  beam_size: 0 
-# -----------------------------------
+  pw_kernel_encoder: 3
+  pw_padding_encoder: 1
+  merge_mode_encoder: 'conv'
+ # -----------------------------------
 decoder:
   num_layers_decoder: 3
   num_heads_decoder: 4
@@ -24,4 +26,5 @@ decoder:
   n_hidden_decoder: 128
   nb_classes: # Empty, to be filled automatically.
   dropout_decoder: .25
+  beam_size: 0 
 # EOF

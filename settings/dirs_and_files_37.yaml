@@ -35,8 +35,8 @@ dataset:
 # -----------------------------------
 model:
   model_dir: 'models'
-  checkpoint_model_name: 'model_37.pt'
-  pre_trained_model_name: 'best_model_37.pt'
+  checkpoint_model_name: 'model_37_8.pt'
+  pre_trained_model_name: 'best_model_37_8.pt'
 # -----------------------------------
 logging:
   logger_dir: 'logging'
