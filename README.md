@@ -1,6 +1,6 @@
 # WaveTransformer Repository
 Welcome to the repository of the WaveTransformer.
-If you want to reproduce the results of the paper and know what you are doing, then jump ahead, get the pre-trained weights from [here](https://github.com/haantran96/wavetransformer/tree/main/outputs/models) and run the inference code as shown in ....
+If you want to reproduce the results of the paper and know what you are doing, then jump ahead, get the pre-trained weights from [here](https://github.com/haantran96/wavetransformer/tree/main/outputs/models) and run the inference code as shown [here](#using-the-pre-trained-weights-for-inference)
 If you want to re-train WaveTransformer, then you can use the master branch, as it has the code based on the most up-to-date version of PyTorch.
 
 There is also an [on-line demo](https://haantran96.github.io/wavetransformer-web-demo/) of the WaveTransformer.
