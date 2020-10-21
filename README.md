@@ -207,6 +207,7 @@ workflow:
 3. `model.yaml`: this line should be set to "No" to do the training (from scratch):
 
 ```use_pre_trained_model: No```
+
 If you wish to continue training, you can also set `use_pre_trained_model` to `Yes`.
 
 # Acknowledgement
