@@ -215,3 +215,4 @@ The implementation of the codebase is adapted (with some modifications) from the
 1. For WaveNet implementation: https://www.kaggle.com/c/liverpool-ion-switching/discussion/145256
 2. For Transformer implementation: https://nlp.seas.harvard.edu/2018/04/03/attention.html
 3. For beam search decoding: https://github.com/budzianowski/PyTorch-Beam-Search-Decoding
+4. For Depthwise separable convolution implementation: https://github.com/dr-costas/dnd-sed
