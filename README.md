@@ -30,7 +30,7 @@ $ git clone git@github.com:haantran96/wavetransformer.git
 ```
 To install the dependencies, you can use pip. It is advisable to run this system with a virtual environment to avoid package conflicts
 ```
-$ pip install -r requirements_pip.txt
+$ pip install -r requirement_pip.txt
 ```
 
 ## Dataset setup
