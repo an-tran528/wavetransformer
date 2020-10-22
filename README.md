@@ -1,5 +1,5 @@
 # WaveTransformer Repository
-Welcome to the repository of the WaveTransformer.
+Welcome to the repository of the paper [WaveTransformer: A Novel Architecture for Audio Captioning Based on Learning Temporal and Time-Frequency Information](https://arxiv.org/abs/2010.11098) 
 If you want to reproduce the results of the paper and know what you are doing, then jump ahead, get the pre-trained weights from [here](https://github.com/haantran96/wavetransformer/tree/main/outputs/models) and run the inference code as shown [here](#using-the-pre-trained-weights-for-inference)
 If you want to re-train WaveTransformer, then you can use the master branch, as it has the code based on the most up-to-date version of PyTorch.
 
