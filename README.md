@@ -37,13 +37,7 @@ $ pip install -r requirement_pip.txt
 Please go to DCASE2020's Baseline repository, part [Preparing the data](https://github.com/audio-captioning/dcase-2020-baseline#preparing-the-data) to download and set up the data.
 
 ## Create a dataset
-To create the dataset, you can either run the script processes/dataset.py using the command:
-```
-$ python processes/dataset.py
-```
-or run the system using the main.py script. In any case, the dataset creation will start.
-
-You can select if you want to have the validation of the data by altering the `validate_dataset` parameter at the `settings/dataset_creation.yaml` file.
+The system uses [this repository](https://github.com/audio-captioning/clotho-dataset) to create datase. Please clone and follow its instruction for dataset creation.
 
 The result of the dataset creation process will be the creation of the directories:
 
