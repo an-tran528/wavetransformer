@@ -21,6 +21,7 @@ from tools.model import module_epoch_passing, get_model,\
 from data_handlers.clotho_loader import get_clotho_loader
 from eval_metrics import evaluate_metrics
 from operator import itemgetter
+import processes.dataset as dataset
 
 __author__ = 'Konstantinos Drossos -- Tampere University'
 __docformat__ = 'reStructuredText'
@@ -494,31 +495,50 @@ def method(settings: MutableMapping[str, Any],
     logger_main.info('Bootstrapping method')
     pretty_printer = printing.get_pretty_printer()
     logger_inner = logger.bind(is_caption=False, indent=1)
-    device, device_name = get_device(
-        settings['dnn_training_settings']['training']['force_cpu'])
 
-    model_dir = Path(
-        settings['dirs_and_files']['root_dirs']['outputs'],
-        settings['dirs_and_files']['model']['model_dir'])
+    if settings['workflow']['dataset_creation']:
+        logger_main.info('Starting creation of dataset')
 
-    model_dir.mkdir(parents=True, exist_ok=True)
+        logger_inner.info('Creating examples')
+        dataset.create_dataset(
+            settings_dataset=settings['dataset_creation_settings'],
+            settings_dirs_and_files=settings['dirs_and_files'])
+        logger_inner.info('Examples created')
 
-    model_file_name = f'{settings["dirs_and_files"]["model"]["checkpoint_model_name"]}'
+        logger_inner.info('Extracting features')
+        dataset.extract_features(
+            root_dir=settings['dirs_and_files']['root_dirs']['data'],
+            settings_data=settings['dirs_and_files']['dataset'],
+            settings_features=settings['feature_extraction_settings'])
+        logger_inner.info('Features extracted')
+        logger_main.info('Creation of dataset ended')
 
-    logger_inner.info(f'Process on {device_name}\n')
+    if settings['workflow']['dnn_training'] or settings['workflow']['dnn_evaluation']:
+        device, device_name = get_device(
+            settings['dnn_training_settings']['training']['force_cpu'])
 
-    logger_inner.info('Settings:\n'
-                      f'{pretty_printer.pformat(settings)}\n')
+        model_dir = Path(
+            settings['dirs_and_files']['root_dirs']['outputs'],
+            settings['dirs_and_files']['model']['model_dir'])
 
-    logger_inner.info('Loading indices file')
-    indices_list = _load_indices_file(
-        settings['dirs_and_files'],
-        settings['dnn_training_settings']['data'])
-    logger_inner.info('Done')
+        model_dir.mkdir(parents=True, exist_ok=True)
 
-    model: Union[Module, None] = None
+        model_file_name = f'{settings["dirs_and_files"]["model"]["checkpoint_model_name"]}'
 
-    logger_main.info('Bootstrapping done')
+        logger_inner.info(f'Process on {device_name}\n')
+
+        logger_inner.info('Settings:\n'
+                        f'{pretty_printer.pformat(settings)}\n')
+
+        logger_inner.info('Loading indices file')
+        indices_list = _load_indices_file(
+            settings['dirs_and_files'],
+            settings['dnn_training_settings']['data'])
+        logger_inner.info('Done')
+
+        model: Union[Module, None] = None
+
+        logger_main.info('Bootstrapping done')
 
     if settings['workflow']['dnn_training']:
         logger_main.info('Doing training')
