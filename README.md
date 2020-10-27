@@ -37,7 +37,39 @@ $ pip install -r requirement_pip.txt
 Please go to DCASE2020's Baseline repository, part [Preparing the data](https://github.com/audio-captioning/dcase-2020-baseline#preparing-the-data) to download and set up the data.
 
 ## Create a dataset
-The system uses [this repository](https://github.com/audio-captioning/clotho-dataset) to create datase. Please clone and follow its instruction for dataset creation.
+There are 2 method to create dataset from the audio files:
+
+**Method 1:**
+
+  Clone [this repository](https://github.com/audio-captioning/clotho-dataset) and follow its instructions to create dataset.
+  
+**Method 2:**
+  
+  -In the `main_settings_$ID.yaml`, change to the following line:
+  ```
+  workflow:
+    dataset_creation: Yes
+  ```
+  -In `dirs_and_files_$ID.yaml`:
+  ```
+    features_dirs:
+    output: 'data_splits'
+    development: *dev
+    evaluation: *eva
+    validation: *val
+  audio_dirs:
+    downloaded: 'clotho_audio_files'
+    output: 'data_splits_audio'
+    development: *dev
+    evaluation: *eva
+    validation: *val
+  annotations_dir: 'clotho_csv_files'
+  pickle_files_dir: 'pickles'
+  ```
+  Please note that you need to create directory for audios in `data/clotho_audio_files` and the csv files in `data/clotho_csv_files`.
+  
+  then run:
+  ```python main.py -c main_settings -j $ID```
 
 The result of the dataset creation process will be the creation of the directories:
 
@@ -48,7 +80,7 @@ The result of the dataset creation process will be the creation of the directori
 
 The directories in data/data_splits have the input and output examples for the optimization and assessment of the baseline DNN. The data/pickles directory holds the pickle files that have the frequencies of the words and characters (so one can use weights in the objective function) and the correspondence of words and characters with indices.
 
-Note bold: Once you have created the dataset, there is no need to create it every time. That is, after you create the dataset using the baseline system, then you can set
+**Note**: Once you have created the dataset, there is no need to create it every time. That is, after you create the dataset using the baseline system, then you can set
 ```
 workflow:
   dataset_creation: No
