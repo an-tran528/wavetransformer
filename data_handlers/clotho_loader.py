@@ -81,7 +81,7 @@ def get_clotho_loader(split: str,
         settings_io['root_dirs']['data'],
         settings_io['dataset']['features_dirs']['output'])
 
-    if settings_data['use_validation_split']:
+    if settings_data['use_validation_split'] and split=='development' and is_training:
         validation_files_path = Path(
             settings_io['root_dirs']['data'],
             settings_io['dataset']['pickle_files_dir'],
