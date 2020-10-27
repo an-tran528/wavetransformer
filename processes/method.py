@@ -10,7 +10,7 @@ from typing import MutableMapping, MutableSequence,\
 from torch import Tensor, no_grad, save as pt_save, \
     load as pt_load, randperm
 from torch.nn import CrossEntropyLoss, Module, DataParallel, KLDivLoss
-from torch.optim import Adam 
+from torch.optim import Adam
 from torch.nn.functional import softmax
 from loguru import logger
 import torch
@@ -21,7 +21,6 @@ from tools.model import module_epoch_passing, get_model,\
 from data_handlers.clotho_loader import get_clotho_loader
 from eval_metrics import evaluate_metrics
 from operator import itemgetter
-import processes.dataset as dataset
 
 __author__ = 'Konstantinos Drossos -- Tampere University'
 __docformat__ = 'reStructuredText'
@@ -94,7 +93,7 @@ def _decode_outputs(predicted_outputs: MutableSequence[Tensor],
 
         try:
             predicted_caption = predicted_caption[
-                                :predicted_caption.index(eos_token)]
+                :predicted_caption.index(eos_token)]
         except ValueError:
             pass
 
@@ -182,7 +181,7 @@ def _do_evaluation(model: Module,
     with no_grad():
         evaluation_outputs = module_epoch_passing(
             data=validation_data, module=model,
-            use_y=False, 
+            use_y=False,
             objective=None, optimizer=None)
 
     captions_pred, captions_gt = _decode_outputs(
@@ -199,6 +198,7 @@ def _do_evaluation(model: Module,
 
     for metric, values in metrics.items():
         logger_main.info(f'{metric:<7s}: {values["score"]:7.4f}')
+
 
 def _do_training(model: Module,
                  settings_training:  MutableMapping[
@@ -265,8 +265,10 @@ def _do_training(model: Module,
     try:
         logger_inner.info('Setting batch counter for scheduled sampling')
         model.decoder.batch_counter = len(training_data)
-        logger_inner.info(f'Batch counter setting done, value {model.decoder.batch_counter}')
-        logger_inner.info(f'Batch counter for validation data {len(validation_data)}')
+        logger_inner.info(
+            f'Batch counter setting done, value {model.decoder.batch_counter}')
+        logger_inner.info(
+            f'Batch counter for validation data {len(validation_data)}')
     except AttributeError:
         logger_inner.info('Model does not have batch counter')
 
@@ -275,7 +277,8 @@ def _do_training(model: Module,
         frequencies_tensor: Union[Tensor, None] = Tensor(frequencies_list).to(
             next(model.parameters()).device).float()
         frequencies_tensor: Tensor = frequencies_tensor.max().div(frequencies_tensor)
-        frequencies_tensor: Tensor = frequencies_tensor.div(frequencies_tensor.max())
+        frequencies_tensor: Tensor = frequencies_tensor.div(
+            frequencies_tensor.max())
         if settings_training['clamp_value_freqs'] > -1:
             frequencies_tensor.clamp_(
                 settings_training['clamp_value_freqs'],
@@ -286,7 +289,7 @@ def _do_training(model: Module,
     # objective = CrossEntropyLoss(weight=frequencies_tensor)
     objective = CrossEntropyLoss()
     optimizer = Adam(params=model.parameters(),
-                        lr=settings_training['optimizer']['lr'])
+                     lr=settings_training['optimizer']['lr'])
     # Inform that we start training
     logger_main.info('Starting training')
 
@@ -332,11 +335,10 @@ def _do_training(model: Module,
             val_loss_str = '--'
             early_stopping_dif = prv_validation_metric - validation_metric
 
-
         if settings_data['use_validation_split']:
             # Check if we have to decode captions for the current epoch
             do_captions_decoding = divmod(
-                epoch , settings_training['text_output_every_nb_epochs'])[-1] == 0
+                epoch, settings_training['text_output_every_nb_epochs'])[-1] == 0
 
             if do_captions_decoding:
                 log_captions = True
@@ -358,7 +360,7 @@ def _do_training(model: Module,
                 for metric, values in metrics.items():
                     logger_main.info(f'{metric:<7s}: {values["score"]:7.4f}')
                 logger_main.info('Calculation of metrics done')
-            
+
             validation_metric = metrics['spider']['score']
             early_stopping_dif = validation_metric - prv_validation_metric
         else:
@@ -410,7 +412,7 @@ def _do_training(model: Module,
     # Inform that we are done
     logger_main.info('Training done')
     logger_main.info(f'Best validation metric {validation_metric} '
-                            f'at epoch {best_epoch}.')
+                     f'at epoch {best_epoch}.')
 
     # Load best model
     model.load_state_dict(pt_load(
@@ -496,49 +498,31 @@ def method(settings: MutableMapping[str, Any],
     pretty_printer = printing.get_pretty_printer()
     logger_inner = logger.bind(is_caption=False, indent=1)
 
-    if settings['workflow']['dataset_creation']:
-        logger_main.info('Starting creation of dataset')
+    device, device_name = get_device(
+        settings['dnn_training_settings']['training']['force_cpu'])
 
-        logger_inner.info('Creating examples')
-        dataset.create_dataset(
-            settings_dataset=settings['dataset_creation_settings'],
-            settings_dirs_and_files=settings['dirs_and_files'])
-        logger_inner.info('Examples created')
+    model_dir = Path(
+        settings['dirs_and_files']['root_dirs']['outputs'],
+        settings['dirs_and_files']['model']['model_dir'])
 
-        logger_inner.info('Extracting features')
-        dataset.extract_features(
-            root_dir=settings['dirs_and_files']['root_dirs']['data'],
-            settings_data=settings['dirs_and_files']['dataset'],
-            settings_features=settings['feature_extraction_settings'])
-        logger_inner.info('Features extracted')
-        logger_main.info('Creation of dataset ended')
+    model_dir.mkdir(parents=True, exist_ok=True)
 
-    if settings['workflow']['dnn_training'] or settings['workflow']['dnn_evaluation']:
-        device, device_name = get_device(
-            settings['dnn_training_settings']['training']['force_cpu'])
+    model_file_name = f'{settings["dirs_and_files"]["model"]["checkpoint_model_name"]}'
 
-        model_dir = Path(
-            settings['dirs_and_files']['root_dirs']['outputs'],
-            settings['dirs_and_files']['model']['model_dir'])
+    logger_inner.info(f'Process on {device_name}\n')
 
-        model_dir.mkdir(parents=True, exist_ok=True)
+    logger_inner.info('Settings:\n'
+                      f'{pretty_printer.pformat(settings)}\n')
 
-        model_file_name = f'{settings["dirs_and_files"]["model"]["checkpoint_model_name"]}'
+    logger_inner.info('Loading indices file')
+    indices_list = _load_indices_file(
+        settings['dirs_and_files'],
+        settings['dnn_training_settings']['data'])
+    logger_inner.info('Done')
 
-        logger_inner.info(f'Process on {device_name}\n')
+    model: Union[Module, None] = None
 
-        logger_inner.info('Settings:\n'
-                        f'{pretty_printer.pformat(settings)}\n')
-
-        logger_inner.info('Loading indices file')
-        indices_list = _load_indices_file(
-            settings['dirs_and_files'],
-            settings['dnn_training_settings']['data'])
-        logger_inner.info('Done')
-
-        model: Union[Module, None] = None
-
-        logger_main.info('Bootstrapping done')
+    logger_main.info('Bootstrapping done')
 
     if settings['workflow']['dnn_training']:
         logger_main.info('Doing training')
