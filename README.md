@@ -165,7 +165,7 @@ Please change accordingly to the following hyperparameters:
   pw_padding_encoder: 2
   merge_mode_encoder: 'mean'
 ```
-- `best_model_38_5.pt`: [WT_tf.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_39.yaml)
+- `best_model_38_5.pt`: [WT_tf](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_39.yaml)
 
 ***For beam search:*** In order to use beam search, please set in the yaml model files:
 
