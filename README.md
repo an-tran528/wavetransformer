@@ -108,7 +108,7 @@ Then, please specify the directory as shown in the dirs_and_files.yaml:
 ```
 
 
-2. `main_settings_$ID.yaml`. As mentioned, if you have already created the database, please set `dataset_creation: No`. For inference, please set `dnn_training: No` as shown below:
+2. `main_settings_$ID.yaml`. For inference, please set `dnn_training: No` as shown below:
 ```
 workflow:
   dnn_training: No
@@ -146,7 +146,6 @@ training:
   force_cpu: No
   text_output_every_nb_epochs: !!int 10
   nb_examples_to_sample: 100
-  use_class_weights: Yes
   use_y: Yes
   clamp_value_freqs: -1  # -1 is for ignoring
   # EOF
