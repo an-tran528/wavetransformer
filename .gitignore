@@ -25,7 +25,7 @@ notes.txt
 coco_caption/pycocoevalcap/spice/cache
 coco_caption/pycocoevalcap/spice/tmp
 coco_caption/pycocoevalcap/spice/lib/stanford-corenlp-3.6.0-models.jar
-coco_caption/pycocoevalcap/meteor/data/paraphrase-en.gz
+#coco_caption/pycocoevalcap/meteor/data/paraphrase-en.gz
 
 # Distribution / packaging
 .Python
