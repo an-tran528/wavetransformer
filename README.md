@@ -156,6 +156,13 @@ training:
 *Please use the according files for reference:
 - `best_model_16_3_9.pt`: [model_ht_12_16_3.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_16_3.yaml)
 - `best_model_37_8.pt`: [model_ht_12_37.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
+However, these hyperparameters should be changed as:
+```
+  inner_kernel_size_encoder: 3
+  inner_padding_encoder: 1
+  pw_kernel_encoder: 3
+  pw_padding_encoder: 1
+```
 - `best_model_43_3.pt`: [model_ht_12_37.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
 However, these hyperparameters should be changed as:
 ```
@@ -180,6 +187,12 @@ However, these hyperparameters should be changed as:
   inner_kernel_size_encoder: 5
   inner_padding_encoder: 2
 ```
+
+***For beam search:*** In order to use beam search, please set in the yaml model files:
+
+```beam_size: 2``` or larger than 1
+
+Our results are obtained with beam size 2. You can set the beam size larger, but inference time can vary.
 
 Finally, to run the whole inference code:
 ```
