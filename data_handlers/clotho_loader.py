@@ -36,8 +36,10 @@ def _clotho_collate_fn(batch: MutableSequence[ndarray]) \
              and second the output.
     :rtype: torch.Tensor, torch.Tensor, list[str]
     """
-    max_input_t_steps = max([i.shape[0] for iii in batch for ii in iii[0] for i in ii])
-    max_output_t_steps = max([i.shape[0] for iii in batch for ii in iii[1] for i in ii])
+    max_input_t_steps = max([i.shape[0]
+                             for iii in batch for ii in iii[0] for i in ii])
+    max_output_t_steps = max([i.shape[0]
+                              for iii in batch for ii in iii[1] for i in ii])
 
     file_names = [i for ii in batch for i in ii[2]]
 
@@ -51,7 +53,7 @@ def _clotho_collate_fn(batch: MutableSequence[ndarray]) \
     output_tensor = cat([cat([
         from_numpy(i).long(),
         ones(max_output_t_steps - len(i)).mul(eos_token).long()]).unsqueeze(0)
-                         for iii in batch for ii in iii[1] for i in ii])
+        for iii in batch for ii in iii[1] for i in ii])
 
     return input_tensor, output_tensor, file_names
 
@@ -81,7 +83,7 @@ def get_clotho_loader(split: str,
         settings_io['root_dirs']['data'],
         settings_io['dataset']['features_dirs']['output'])
 
-    if settings_data['use_validation_split'] and split=='development' and is_training:
+    if settings_data['use_validation_split'] and split != 'evaluation':
         validation_files_path = Path(
             settings_io['root_dirs']['data'],
             settings_io['dataset']['pickle_files_dir'],

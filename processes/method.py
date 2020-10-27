@@ -545,20 +545,8 @@ def method(settings: MutableMapping[str, Any],
         logger_inner.info('Total amount of parameters: '
                           f'{sum([i.numel() for i in model.parameters()])}')
 
-        if settings['dnn_training_settings']['training']['use_class_weights']:
-            logger_inner.info('Getting class frequencies')
-            class_frequencies = _load_frequencies_file(
-                settings['dirs_and_files'],
-                settings['dnn_training_settings']['data'])
-            logger_inner.info('Class frequencies ready')
-            nb_classes = len(class_frequencies)
-        else:
-            class_frequencies = _load_frequencies_file(
-                settings['dirs_and_files'],
-                settings['dnn_training_settings']['data'])
-            logger_inner.info('Class frequencies ready')
-            nb_classes = len(class_frequencies)
-            class_frequencies = None
+        nb_classes = len(indices_list)
+        class_frequencies = None
 
         logger_inner.info('Starting training')
         _do_training(
