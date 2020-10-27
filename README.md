@@ -154,18 +154,10 @@ training:
 ```use_pre_trained_model: Yes```
 
 *Please use the according files for reference:
-- `best_model_16_3_9.pt`: [model_ht_12_16_3.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_16_3.yaml)
-- `best_model_37_8.pt`: [model_ht_12_37.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
-- `best_model_43_3.pt`: [model_ht_12_37.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
-However, these hyperparameters should be changed as:
-```
-  inner_kernel_size_encoder: 5
-  inner_padding_encoder: 2
-  pw_kernel_encoder: 5
-  pw_padding_encoder: 2
-```
-- `best_model_44_7.pt`: [model_ht_12_37.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
-However, these hyperparameters should be changed as:
+- `best_model_43_3.pt`: [WT](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
+- `best_model_16_3_9.pt`: [WT_temp](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_16_3.yaml)
+- `best_model_44_7.pt`: [WT_avg](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_37.yaml)
+Please change accordingly to the following hyperparameters:
 ```
   inner_kernel_size_encoder: 5
   inner_padding_encoder: 2
@@ -173,19 +165,19 @@ However, these hyperparameters should be changed as:
   pw_padding_encoder: 2
   merge_mode_encoder: 'mean'
 ```
-- `best_model_39_5.pt`: [model_ht_12_39.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_39.yaml)
-- `best_model_38_5.pt`: [model_ht_12_39.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_39.yaml)
-However, these hyperparameters should be changed as:
-```
-  inner_kernel_size_encoder: 5
-  inner_padding_encoder: 2
-```
+- `best_model_38_5.pt`: [WT_tf.yaml](https://github.com/haantran96/wavetransformer/blob/main/settings/model_ht_12_39.yaml)
+
+***For beam search:*** In order to use beam search, please set in the yaml model files:
+
+```beam_size: 2``` or larger than 1
+
+Our results are obtained with beam size 2. You can set the beam size larger, but inference time can vary.
 
 Finally, to run the whole inference code:
 ```
-python main.py -c main_settings_$ID -j $ID
+python main.py -c main_settings_$ID -j $id_nr
 ```
-`main_settings` should be the same name with your `main_settings.yaml` file.
+`main_settings_$ID` should be the same name with your `main_settings_$ID.yaml` file.
 
 ## Re-training WaveTransformer
 The process for retraining are the same like inference. However, you must change as the following:
