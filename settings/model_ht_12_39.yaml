@@ -5,13 +5,13 @@
 # affiliation: Tampere University
 # =================================
 model_name: 'wave_transformer_8'
-use_pre_trained_model: No
+use_pre_trained_model: Yes
 # -----------------------------------
 encoder:
   in_channels_encoder:  64
   cnn_channels_encoder:  128
-  inner_kernel_size_encoder: 3
-  inner_padding_encoder: 1
+  inner_kernel_size_encoder: 5
+  inner_padding_encoder: 2
   last_dim_encoder: 128 
   beam_size: 0 
 # -----------------------------------
