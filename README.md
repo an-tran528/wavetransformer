@@ -190,14 +190,14 @@ python main.py -c main_settings_$ID -j $ID
 
 ## Re-training WaveTransformer
 The process for retraining are the same like inference. However, you must change as the following:
-1. `main_settings.yaml`. As mentioned, if you have already created the database, please set `dataset_creation: No`. For training, please set `dnn_training: Yes` as shown below:
+1. `main_settings_$ID.yaml`:
 ```
 workflow:
   dnn_training: Yes
   dnn_evaluation: Yes
 ```
-2. `method.yaml`: make changes as to the indicated hyperparameters
-3. `model.yaml`: this line should be set to "No" to do the training (from scratch):
+2. `method_$ID.yaml`: make changes as to the indicated hyperparameters
+3. `model_$ID.yaml`: this line should be set to "No" to do the training (from scratch):
 
 ```use_pre_trained_model: No```
 
