@@ -37,40 +37,8 @@ $ pip install -r requirement_pip.txt
 Please go to DCASE2020's Baseline repository, part [Preparing the data](https://github.com/audio-captioning/dcase-2020-baseline#preparing-the-data) to download and set up the data.
 
 ## Create a dataset
-There are 2 method to create dataset from the audio files:
-
-**Method 1:**
-
-  Clone [this repository](https://github.com/audio-captioning/clotho-dataset) and follow its instructions to create dataset.
+Clone [this repository](https://github.com/audio-captioning/clotho-dataset) and follow its instructions to create dataset.
   
-**Method 2:**
-  
-  -In the `main_settings_$ID.yaml`, change to the following line:
-  ```
-  workflow:
-    dataset_creation: Yes
-  ```
-  -In `dirs_and_files_$ID.yaml`:
-  ```
-    features_dirs:
-    output: 'data_splits'
-    development: *dev
-    evaluation: *eva
-    validation: *val
-  audio_dirs:
-    downloaded: 'clotho_audio_files'
-    output: 'data_splits_audio'
-    development: *dev
-    evaluation: *eva
-    validation: *val
-  annotations_dir: 'clotho_csv_files'
-  pickle_files_dir: 'pickles'
-  ```
-  Please note that you need to create directory for audios in `data/clotho_audio_files` and the csv files in `data/clotho_csv_files`.
-  
-  then run:
-  ```python main.py -c main_settings -j $ID```
-
 The result of the dataset creation process will be the creation of the directories:
 
     1. `data/data_splits`,
@@ -80,20 +48,11 @@ The result of the dataset creation process will be the creation of the directori
 
 The directories in data/data_splits have the input and output examples for the optimization and assessment of the baseline DNN. The data/pickles directory holds the pickle files that have the frequencies of the words and characters (so one can use weights in the objective function) and the correspondence of words and characters with indices.
 
-**Note**: Once you have created the dataset, there is no need to create it every time. That is, after you create the dataset using the baseline system, then you can set
-```
-workflow:
-  dataset_creation: No
-```
-at the `settings/main_settings.yaml` file.
 
 ## Using the pre-trained weights for inference
 The pre-trained weights are stored at [outputs/models directory](https://github.com/haantran96/wavetransformer/tree/main/outputs/models). Please be noted that the pre-trained weights are different for each different model.
 **Note bold**: To use the caption evaluate tools you need to have Java installed and enabled.
 Before being able to run the code for the evaluation of the predictions, you have first to run the script `get_stanford_models.sh` in the `coco_caption` directory.
-
-
-
 In the `settings` folder, there are the following files:
 1. `dirs_and_files.yaml`: Stores the locations of the according files. For example:
 ```
@@ -117,14 +76,11 @@ dataset:
     evaluation: *eva
     validation: *val
   annotations_dir: 'clotho_csv_files'
-  pickle_files_dir: 'pickles'
+  pickle_files_dir: 'WT_pickles'
   files:
     np_file_name_template: 'clotho_file_{audio_file_name}_{caption_index}.npy'
-    words_list_file_name: 'words_list.p'
-    words_counter_file_name: 'words_frequencies.p'
-    characters_list_file_name: 'characters_list.p'
-    characters_frequencies_file_name: 'characters_frequencies.p'
-    validation_files_file_name: 'validation_file_names.p'
+    words_list_file_name: 'WT_words_list.p'
+    characters_list_file_name: 'WT_characters_list.p'
 # -----------------------------------
 model:
   model_dir: 'models'
@@ -138,26 +94,34 @@ logging:
 
 Most important directories are: `feature_dirs/output` and `model`, as you must specify the locations of the `/data` and model paths according. Noted: by default, the code will save current best model as `best_checkpoint_model_name.pt`, so it is advisable to always set `model/pre_trained_model_name` as `best_checkpoint_model_name.pt`.
 
-2. `main_settings.yaml`. As mentioned, if you have already created the database, please set `dataset_creation: No`. For inference, please set `dnn_training: No` as shown below:
+**Note bold 2**: To obtain the exactly same results as we had in the paper, please use the same [word indices and character indices](https://github.com/haantran96/wavetransformer/tree/main/data/WT_pickles) that we had already generated.
+
+Then, please specify the directory as shown in the dirs_and_files.yaml:
+```
+...
+  pickle_files_dir: 'WT_pickles'
+  files:
+    np_file_name_template: 'clotho_file_{audio_file_name}_{caption_index}.npy'
+    words_list_file_name: 'WT_words_list.p'
+    characters_list_file_name: 'WT_characters_list.p'
+...
+```
+
+
+2. `main_settings_$ID.yaml`. As mentioned, if you have already created the database, please set `dataset_creation: No`. For inference, please set `dnn_training: No` as shown below:
 ```
 workflow:
-  dataset_creation: No
   dnn_training: No
   dnn_evaluation: Yes
-# ---------------------------------
-dataset_creation_settings: !include dataset_creation.yaml
-# -----------------------------------
-feature_extraction_settings: !include feature_extraction.yaml
-# -----------------------------------
 dnn_training_settings: !include method.yaml
 # -----------------------------------
 dirs_and_files: !include dirs_and_files.yaml
 # EOF
 ```
 
-3. `method.yaml`: contain different hyperparameters. This is the setting for the best models:
+3. `method_$ID.yaml`: contain different hyperparameters. This is the setting for the best models:
 ```
-model: !include model.yaml
+model: !include model_$ID.yaml
 # ----------------------
 data:
   input_field_name: 'features'
@@ -187,7 +151,7 @@ training:
   clamp_value_freqs: -1  # -1 is for ignoring
   # EOF
 ```
-4. `model.yaml`: The settings are different for different models. However, this line should be set to "Yes" to do the inference:
+4. `model_$ID.yaml`: The settings are different for different models. However, this line should be set to "Yes" to do the inference:
 ```use_pre_trained_model: Yes```
 
 *Please use the according files for reference:
@@ -220,7 +184,7 @@ However, these hyperparameters should be changed as:
 
 Finally, to run the whole inference code:
 ```
-python main.py -c main_settings -j $ID
+python main.py -c main_settings_$ID -j $ID
 ```
 `main_settings` should be the same name with your `main_settings.yaml` file.
 
@@ -229,7 +193,6 @@ The process for retraining are the same like inference. However, you must change
 1. `main_settings.yaml`. As mentioned, if you have already created the database, please set `dataset_creation: No`. For training, please set `dnn_training: Yes` as shown below:
 ```
 workflow:
-  dataset_creation: No
   dnn_training: Yes
   dnn_evaluation: Yes
 ```
