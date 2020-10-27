@@ -203,7 +203,7 @@ def extract_features(root_dir: str,
         # Add the rest to the recarray.
         array_data += (
             features,
-			data_file['audio_data'].item(),
+            data_file['audio_data'].item(),
             data_file['caption'].item(),
             data_file['caption_ind'].item(),
             data_file['words_ind'].item(),
