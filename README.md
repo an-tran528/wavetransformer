@@ -89,6 +89,10 @@ at the `settings/main_settings.yaml` file.
 
 ## Using the pre-trained weights for inference
 The pre-trained weights are stored at [outputs/models directory](https://github.com/haantran96/wavetransformer/tree/main/outputs/models). Please be noted that the pre-trained weights are different for each different model.
+**Note bold**: To use the caption evaluate tools you need to have Java installed and enabled.
+Before being able to run the code for the evaluation of the predictions, you have first to run the script `get_stanford_models.sh` in the `coco_caption` directory.
+
+
 
 In the `settings` folder, there are the following files:
 1. `dirs_and_files.yaml`: Stores the locations of the according files. For example:
