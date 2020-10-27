@@ -13,7 +13,7 @@ dataset:
   evaluation: &eva 'evaluation'
   validation: &val 'validation'
   features_dirs:
-    output: 'data_splits_an'
+    output: 'data_splits'
     development: *dev
     evaluation: *eva
     validation: *val
@@ -24,14 +24,12 @@ dataset:
     evaluation: *eva
     validation: *val
   annotations_dir: 'clotho_csv_files'
-  pickle_files_dir: 'pickles'
+  pickle_files_dir: 'WT_pickles'
   files:
     np_file_name_template: 'clotho_file_{audio_file_name}_{caption_index}.npy'
-    words_list_file_name: 'words_list.p'
-    words_counter_file_name: 'words_frequencies.p'
-    characters_list_file_name: 'characters_list.p'
-    characters_frequencies_file_name: 'characters_frequencies.p'
-    validation_files_file_name: 'validation_file_names.p'
+    words_list_file_name: 'WT_words_list.p'
+    characters_list_file_name: 'WT_characters_list.p'
+    #validation_files_file_name: 'validation_file_names.p'   #uncomment this if training
 # -----------------------------------
 model:
   model_dir: 'models'

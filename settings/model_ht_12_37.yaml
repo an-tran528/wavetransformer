@@ -12,11 +12,11 @@ encoder:
   out_waveblock_encoder: [16,32,64,128] 
   kernel_size_encoder: 3 
   dilation_rates_encoder: [2,2,2,2]
-  inner_kernel_size_encoder: 3
-  inner_padding_encoder: 1
+  inner_kernel_size_encoder: 5
+  inner_padding_encoder: 2
   last_dim_encoder: 128 
-  pw_kernel_encoder: 3
-  pw_padding_encoder: 1
+  pw_kernel_encoder: 5
+  pw_padding_encoder: 2
   merge_mode_encoder: 'conv'
  # -----------------------------------
 decoder:

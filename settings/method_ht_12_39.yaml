@@ -29,9 +29,7 @@ training:
   force_cpu: No
   text_output_every_nb_epochs: !!int 10
   nb_examples_to_sample: 100
-  use_class_weights: Yes
   use_y: Yes
-  #use_kl: Yes
   clamp_value_freqs: -1  # -1 is for ignoring
 # EOF
 

@@ -6,14 +6,9 @@
 # affiliation: Tampere University
 # =================================
 workflow:
-  dataset_creation: No
   dnn_training: Yes
   dnn_evaluation: Yes
 # ---------------------------------
-dataset_creation_settings: !include dataset_creation.yaml
-# -----------------------------------
-feature_extraction_settings: !include feature_extraction.yaml
-# -----------------------------------
 dnn_training_settings: !include method_ht_12_39.yaml
 # -----------------------------------
 dirs_and_files: !include dirs_and_files_39.yaml
