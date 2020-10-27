@@ -6,7 +6,7 @@
 # =================================
 workflow:
   create_dataset: Yes
-  validate_dataset: No
+  validate_dataset: Yes
 # -----------------------------------
 annotations:
   development_file: 'clotho_captions_development.csv'
