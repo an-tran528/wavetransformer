@@ -25,7 +25,10 @@ __all__ = ['WaveTransformer3']
 
 
 class WaveTransformer3(Module):
-
+    """
+    WaveTransformer full model with only E_temp branch
+    (denoted as WT_temp in paper)
+    """
     def __init__(self,
                  in_channels_encoder: int,
                  out_channels_encoder: List,
