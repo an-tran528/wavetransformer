@@ -25,7 +25,7 @@ class WaveTransformer10(Module):
     WaveTransformer full model with E_temp, E_tf and E_merge branches
     (denoted as WT/WaveTransformer in paper)
     
-    For WaveTransformer using only E_temp, you can see the   `models.wave_transformer_3.py` file.
+    For the WaveTransformer using only E_temp, you can see the `models.wave_transformer_3.py` file.
     For the WaveTransfomer using only E_tf, you can see the `models.wave_transformer_8.py` file.
     """
     def __init__(self,
