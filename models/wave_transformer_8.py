@@ -21,7 +21,10 @@ __all__ = ['WaveTransformer8']
 
 
 class WaveTransformer8(Module):
-
+    """
+    WaveTransforme with only E_tf branch using DWS-CNN
+    (denoted as WT_tf in paper)
+    """
     def __init__(self,
                  in_channels_encoder: int,
                  cnn_channels_encoder: int,
