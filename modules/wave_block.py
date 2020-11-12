@@ -5,7 +5,7 @@ from torch import cat, Tensor
 from torch.nn import Module, GRU, Dropout, ModuleList, Conv1d
 import torch.nn as nn
 import torch
-__author__ = 'Konstantinos Drossos -- Tampere University'
+__author__ = 'An Tran'
 __docformat__ = 'reStructuredText'
 __all__ = ['WaveBlock']
 
