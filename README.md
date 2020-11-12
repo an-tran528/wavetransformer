@@ -7,6 +7,7 @@ There is also an [on-line demo](https://haantran96.github.io/wavetransformer-web
 
 If you need some help on using WaveTransformer, please read the following instructions.
 - [How do I use WaveTransformer](#how-do-i-use-wavetransformer)
+  * [Available models](#available-models)
   * [Setting up the environment](#setting-up-the-environment)
   * [Dataset setup](#dataset-setup)
   * [Create a dataset](#create-a-dataset)
@@ -14,6 +15,18 @@ If you need some help on using WaveTransformer, please read the following instru
   * [Re-training WaveTransformer](#re-training-wavetransformer)
 - [Acknowledgement](#acknowledgement)
 
+# Available models
+
+In the directory [models](https://github.com/haantran96/wavetransformer/tree/main/models), there are 3 separate models:
+
+  -WaveTransformer (full model) (WT and WT_avg): [WaveTransformer10](https://github.com/haantran96/wavetransformer/blob/main/models/wave_transformer_10.py)
+
+  -WaveTransformer with only E_temp branch (WT_temp): [WaveTransformer3](https://github.com/haantran96/wavetransformer/blob/main/models/wave_transformer_3.py)
+  
+  -WaveTransformer with only E_tf branch (WT_tf): [WaveTransformer8](https://github.com/haantran96/wavetransformer/blob/main/models/wave_transformer_8.py)
+  
+The architecture of WT with the branches:
+![Full_model](model_architecture.png)
 # How do I use WaveTransformer
 ## Setting up the environment
 
